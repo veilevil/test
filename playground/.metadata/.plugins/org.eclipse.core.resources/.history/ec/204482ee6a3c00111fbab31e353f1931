@@ -1,0 +1,13 @@
+#Wed Jan 11 21:53:58 CST 2012
+eclipse.preferences.version=1
+encoding//src/cms/admin/dialog/views.py=utf-8
+encoding//src/cms/admin/forms.py=utf-8
+encoding//src/cms/api.py=utf-8
+encoding//src/cms/forms/fields.py=utf-8
+encoding//src/cms/management/commands/subcommands/list.py=utf-8
+encoding//src/cms/management/commands/subcommands/moderator.py=utf-8
+encoding//src/cms/models/fields.py=utf-8
+encoding//src/cms/models/managers.py=utf-8
+encoding//src/cms/models/metaclasses.py=utf-8
+encoding//src/cms/models/pluginmodel.py=utf-8
+encoding//src/cms/urls.py=utf-8

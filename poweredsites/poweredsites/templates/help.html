@@ -1,0 +1,31 @@
+{% extends "blog/blog.html" %}
+
+{% block sitelinks %}
+    <div id="site-links">
+        <a href="http://poweredsites.org/">Home</a>
+        <a href="http://poweredsites.org/project">Project</a>
+        <a href="http://blog.poweredsites.org">Blog</a>
+        <a class="select" href="http://poweredsites.org/help">About</a>
+    </div>
+{% end %}
+
+{% block blog_content %}
+    {{ modules.entry(entry) }} 
+{% end %}
+
+{% block blog_r %}
+    <div class="sidebox">
+    	<h3>Abouts</h3>
+    	<ul>
+    	{% for help in entries %}
+		    <li>
+		    {% if help.id == entry.id %}
+			    <a class="selected" href="/help/{{help.slug}}">{{escape(help.title)}}</a>
+			{% else %}
+			    <a href="/help/{{help.slug}}">{{escape(help.title)}}</a>
+			{% end %}
+			</li>
+		{% end %}
+		</ul>
+    </div>
+{% end %}

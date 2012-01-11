@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  {% set date_format = "%Y-%m-%dT%H:%M:%SZ" %}
+  <title>{{ escape(title) }}</title>
+  {% if len(entries) > 0 %}
+    <updated>{{ max(e.updated for e in entries).strftime(date_format) }}</updated>
+  {% else %}
+    <updated>{{ datetime.datetime.utcnow().strftime(date_format) }}</updated>
+  {% end %}
+  <id>http://{{ request.host }}/</id>
+  <link rel="alternate" href="http://{{ request.host }}/" title="{{ escape(title) }}" type="text/html"/>
+  <link rel="self" href="{{ request.full_url() }}" title="{{ escape(title) }}" type="application/atom+xml"/>
+  <author><name>{{ escape(title) }}</name></author>
+  {% for entry in entries %}
+    <entry>
+      <id>http://sites.{{ request.host }}/{{ entry.slug }}</id>
+      <title type="text">{{ escape(entry.sitename) }}</title>
+      <link href="http://sites.{{ request.host }}/{{ entry.slug }}" rel="alternate" type="text/html"/>
+      <updated>{{ entry.updated.strftime(date_format) }}</updated>
+      <published>{{ entry.created.strftime(date_format) }}</published>
+      <content type="xhtml" xml:base="http://{{ request.host }}/">
+        <div xmlns="http://www.w3.org/1999/xhtml">            
+        	<b>Website:</b>
+			<br/><a target="_blank" href="{{ entry.website }}">{{ entry.website }}</a>
+            <br/><br/><b>Powered by:</b>
+            {{modules.website_powereds(entry.id)}}
+        	<br/><br/><b>Description:</b> 
+        	<br/>{{escape(entry.description if entry.description.strip() else entry.sitename)}}
+            {% if entry.usecase_md %}
+	            <br/><br/><b>Usecase:</b>  
+	            <br/>{{ entry.usecase_md }}
+            {% end %}
+			{% if entry.source_url %}
+                <br/><br/><b>Source Code:</b>        
+                <br/><a target="_blank" href="{{entry.source_url}}">{{entry.source_url}}</a>            
+            {% end %}
+			<br/>
+		</div>
+      </content>
+    </entry>
+  {% end %}
+</feed>

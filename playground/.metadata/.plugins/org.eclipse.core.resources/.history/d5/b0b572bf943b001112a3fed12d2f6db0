@@ -1,0 +1,51 @@
+from django.conf.urls.defaults import patterns, include, url
+from django.contrib.auth import views as auth_views
+from djangotest.views import hello,hours_ahead,current_datetime
+from django.contrib.auth.views import login, logout
+from djangotest.todo.views import *
+# Uncomment the next two lines to enable the admin:
+# from django.contrib import admin
+# admin.autodiscover()
+
+urlpatterns = patterns('',
+                       
+                       
+                        url(r'^mine/$', 'djangotest.todo.views.view_list',{'list_slug':'mine'},name="todo-mine"),
+                        url(r'^(?P<list_id>\d{1,4})/(?P<list_slug>[\w-]+)/delete$', 'djangotest.todo.views.del_list',name="todo-del_list"),
+                        url(r'^task/(?P<task_id>\d{1,6})$', 'djangotest.todo.views.view_task', name='djangotest.todo-task_detail'),
+                        url(r'^(?P<list_id>\d{1,4})/(?P<list_slug>[\w-]+)$', 'djangotest.todo.views.view_list', name='djangotest.todo-incomplete_tasks'),
+                        url(r'^(?P<list_id>\d{1,4})/(?P<list_slug>[\w-]+)/completed$', 'djangotest.todo.views.view_list', {'view_completed':1},name='djangotest.todo-completed_tasks'),    
+                        url(r'^add_list/$', 'djangotest.todo.views.add_list',name="todo-add_list"),
+                        url(r'^search/$', 'djangotest.todo.views.search',name="todo-search"),    
+                        url(r'^$', list_lists,name="todo-lists"),
+                        
+                        # View reorder_tasks is only called by JQuery for drag/drop task ordering
+                        url(r'^reorder_tasks/$', 'djangotest.todo.views.reorder_tasks',name="todo-reorder_tasks"),
+                        
+                        url(r'^ticket/add/$', 'djangotest.todo.views.external_add',name="todo-external-add"),    
+                        url(r'^recent/added/$', 'djangotest.todo.views.view_list',{'list_slug':'recent-add'},name="todo-recently_added"),
+                        url(r'^recent/completed/$', 'djangotest.todo.views.view_list',{'list_slug':'recent-complete'},name="todo-recently_completed"),
+                        
+                        
+                        url('^hello/$', hello),
+                        url('^current/$', current_datetime),
+                        
+                        url('^hour/(\d{1,2})/$', hours_ahead),
+                                
+                        url (r'^accounts/login/$', login),
+                        url (r'^accounts/logout/$', logout),
+
+                       
+                       
+    
+    # Examples:
+    # url(r'^$', 'djangotest.views.home', name='home'),
+    # url(r'^djangotest/', include('djangotest.foo.urls')),
+
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    # url(r'^admin/', include(admin.site.urls)),
+)
+

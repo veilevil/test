@@ -1,0 +1,17 @@
+{% extends websites_index.html %}
+
+{% block websites_tab %}
+    <li>
+       {% if context.current_project %}
+           <a href="http://{{subdomain}}poweredsites.org/">{{escape(context.current_project.project)}}</a>
+       {% else %}
+           <a href="http://{{subdomain}}poweredsites.org/">Lateset sites</a>
+       {% end %}
+    </li>          
+    <li class="selected">
+        <a href="http://{{subdomain}}poweredsites.org/top">Top sites</a>
+    </li>
+    <li>
+        <a href="http://{{subdomain}}poweredsites.org/opensource">Open Source</a>
+    </li>
+{% end %}

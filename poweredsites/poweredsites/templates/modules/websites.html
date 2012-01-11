@@ -1,0 +1,37 @@
+{% for site in pagination['rows'] %}
+    <div class='website'>
+    	<div>
+	    	<div class="ws-logo">
+	            <a target="_blank" href="{{site.website}}" class="sitethumbshot">
+	            {% if site.logo is None %}
+	                {{escape(site.sitename[0:25])}}
+	            {% else %}
+	                <img alt="{{escape(site.sitename[0:25])}}" src="{{site.logo}}" />
+	            {% end %}
+	            </a>
+	    	</div>
+			<div class="ws-desc">
+				<a target="_blank" href="http://sites.poweredsites.org/{{site.slug}}">
+	            {{escape(site.description if site.description.strip() else site.sitename)}}
+				</a>
+			</div>
+		</div>
+		<div class="ws-powereds">
+			Powered by:{{modules.website_powereds(site.id)}}
+		</div>
+		<div class="ws-user">
+			<div class="span-5 left">				
+				<span>Page Rank:{{"unknown" if site.pr == -1 else site.pr}}</span>
+				{% if site.source_url %}
+                    &nbsp;&nbsp;<a target="_blank" href="{{site.source_url}}">Source Code</a>
+                {% end %}				
+			</div>
+			<div class="span-10 fright">
+                <a href="http://poweredsites.org/user/{{site.username}}">{{escape(site.openid_name)}}</a>{{site.created}} 
+			</div>                
+        </div>
+    </div>
+{% end %}
+<div class="pagination">
+    {{pagination['pages']}}
+</div>

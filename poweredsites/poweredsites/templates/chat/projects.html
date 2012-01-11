@@ -1,0 +1,46 @@
+ {% extends ../base.html %} 
+ {% block sitelinks %}
+<div id="site-links">                   
+    <a href="http://poweredsites.org/">Home</a>
+    <a href="http://sites.poweredsites.org">Sites</a>
+    <a class="select" href="http://chat.poweredsites.org">Chat</a>
+    <a href="http://blog.poweredsites.org">Blog</a>
+    <a href="http://wiki.poweredsites.org">Wiki</a>                           
+    <a target="_blank" href="http://groups.google.com/group/poweredsites">Group</a>
+</div>
+{% end %}
+
+{% block body %}
+<div id="chat-l" class="span-16">    
+    <div id="chat-body">  
+	    <h3>Latest messages</h3>  	    
+        <div id="inbox">           
+            {% for message in messages %}
+               <div class="message" id="m{{ message["uuid_"] }}">
+               	    <a class="highlight" target="_blank" href="http://chat.poweredsites.org/{{ escape(message['project']) }}">[{{ escape(message['project']) }}]</a>&nbsp;&nbsp; 
+					<a target="_blank" href="http://poweredsites.org/user/{{ escape(message['username']) }}">
+                        {{ escape(message["from_"]) }}
+                    </a>:&nbsp;&nbsp;
+				    {{ escape(message["body"]) }}
+				</div>
+            {% end %}
+        </div>
+    </div>
+    {{modules.chat_projects()}}
+</div>
+<div id="chat-r" class="span-6 last">
+    {% include ../submit_links.html %}
+    {% include ../donate.html %}
+</div>  
+{% end %}
+
+{% block bottom %}
+<style type='text/css'>
+    #side-projects {
+        width:618px;
+        padding:5px;    
+        border:1px solid #ccc;
+        margin-right:10px;
+    }
+</style>
+{% end %}
