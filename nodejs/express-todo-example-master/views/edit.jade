@@ -1,0 +1,19 @@
+extends layout
+block content
+    h1#page-title= title
+
+    #list
+        form(action="/create",method="post",accept-charset="utf-8")
+            .item-new
+                input.input(type="text",name="content")
+        each todo in todos
+            -if (todo._id == current)
+                .item-new
+                    form(class="update-form",action="/update/" + todo._id,method="post",accept-charset="utf-8")
+                        input.update-input(type="text",name="content",value=todo.content)
+                    a(class="del-btn-edit",href="/destroy/" + todo._id,title="Delete this todo item") Delete
+            -else
+                .item
+                    a(class="update-link",href="/edit/" + todo._id,title="Update this todo item")= todo.content
+                    a(class="del-btn",href="/destroy/" + todo._id,title="Delete this todo item") Delete
+

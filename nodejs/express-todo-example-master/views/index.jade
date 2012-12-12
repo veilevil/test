@@ -1,0 +1,17 @@
+extends layout
+block append scripts
+    script(src='/javascripts/controllers/task.js')
+block content
+    .span12
+        h1#page-title= title
+
+        #list
+            form(action="/create",method="post",accept-charset="utf-8")
+                .item-new
+                    input.input(type="text",name="content")
+            ul(ng-controller="TaskListCtrl")
+                    li.item(ng-repeat="todo in todos")
+                        a(class="update-link",href="/edit/{{todo._id}}" ,title="Update this todo item"){{todo.content}}
+                        a(class="btn btn-inverse",href="/destroy/{{todo._id}}" ,title="Delete this todo item")
+                            i.icon-remove.icon-white
+                            |Delete

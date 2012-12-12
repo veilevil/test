@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app>
+<head>
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/public/css/base.css" rel="stylesheet"/>
+    <script src="/public/js/angular.js"></script>
+    <script type="text/javascript">
+    function BookController ($scope,$http) {
+        $http.get("/book")
+        .success(function(data) {
+            $scope.books=data;
+        }).error(function(data) {
+            alert("server error");
+        });
+
+        $scope.addBook=function(bookToAdd){                
+            $http.post("/book",bookToAdd)
+            .success(function(data) {
+                $scope.books.push(data);
+                $scope.bookToAdd={};
+            }).error(function(data) {
+                alert("server error");
+            });
+        }
+        $scope.logout=function(username,password){                
+            $http.post("/user/logout")
+            .success(function(data) {
+                window.location.href='/';
+            }).error(function(data) {
+                alert("server error");
+            });
+        }
+    }
+    </script>
+</head>
+<body ng-controller="BookController">
+    <div id="wrap">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Angular-Node-Example</a>
+                    <p class="navbar-text pull-right">
+                       <a class="navbar-link" ng-click="logout()">logout</a>
+                   </p>
+               </div>
+           </div>
+        </div>
+        <div class="container">
+            <table class="table table-striped table-bordered">
+                <caption>Book List</caption>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>title</th>
+                        <th>author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="book in books">
+                        <td>{{book.id}}</td>
+                        <td>{{book.title}}</td>
+                        <td>{{book.author}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <form class="form-inline">
+                Add a book:
+                <input type="text" ng-model="bookToAdd.title" class="input-small" placeholder="title">
+                <input type="text" ng-model="bookToAdd.author"class="input-small" placeholder="author">
+                <button type="submit" class="btn" ng-click="addBook(bookToAdd)">Add</button>
+            </form>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+        <p class="muted credit">Get the project on <a target="_blank" href="https://github.com/yucong/angular-node">github</a></p>
+        </div>
+    </div>
+</body>
+</html>

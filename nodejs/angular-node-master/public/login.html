@@ -1,0 +1,65 @@
+<!doctype html>
+<html ng-app>
+<head>
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/public/css/base.css" rel="stylesheet"/>
+    <script src="/public/js/angular.js"></script>
+    <script type="text/javascript">
+    function AuthController ($scope,$http,$location) {
+        $scope.valid=true;
+        $scope.login=function(username,password){                
+            $http.post("/user/login", {username:$scope.username,password:$scope.password})
+            .success(function(data) {
+                if(data.error){
+                    $scope.valid=false;
+                }else{
+                    window.location.href='/';
+                }
+            }).error(function(data) {
+                alert("server error");
+            });
+        }
+    }
+    </script>
+</head>
+<body ng-controller="AuthController">
+    <div id="wrap">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Angular-Node-Example</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div ng-show="!valid" class="alert alert-error">
+                invalid username or password!
+            </div>
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="username">Username</label>
+                    <div class="controls">
+                        <input type="text" ng-model="username"  placeholder="Username">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password</label>
+                    <div class="controls">
+                        <input type="password" ng-model="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn" ng-click="login(username,password)">Sign in</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+        <p class="muted credit">Get the project on <a target="_blank" href="https://github.com/yucong/angular-node">github</a></p>
+        </div>
+    </div>
+</body>
+</html>
