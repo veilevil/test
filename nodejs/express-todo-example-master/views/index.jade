@@ -2,6 +2,16 @@ extends layout
 block append scripts
     script(src='/javascripts/controllers/task.js')
 block content
+    #myModal.modal.hide.fade(tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+        .modal-header
+            button.close(type="button",data-dismiss="modal",aria-hidden="true") ×
+            h3#myModalLabel Modal header
+        .modal-body
+            input.update-input(type="text",name="content",value=todo.content)
+        .modal-footer
+            button.btn(data-dismiss="modal",aria-hidden="true") Close
+            button.btn.btn-primary Save changes
+
     .span12
         h1#page-title= title
 
@@ -11,7 +21,7 @@ block content
                     input.input(type="text",name="content")
             ul(ng-controller="TaskListCtrl")
                     li.item(ng-repeat="todo in todos")
-                        a(class="update-link",href="/edit/{{todo._id}}" ,title="Update this todo item"){{todo.content}}
-                        a(class="btn btn-inverse",href="/destroy/{{todo._id}}" ,title="Delete this todo item")
+                        a(href="#myModal",role="button",data-toggle="modal",title="Update this todo item"){{todo.content}}
+                        a(href="/destroy/{{todo._id}}" ,title="Delete this todo item")
                             i.icon-remove.icon-white
                             |Delete
