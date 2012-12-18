@@ -41,7 +41,7 @@ exports.create = function ( req, res, next ){
   }).save( function ( err, todo, count ){
     if( err ) return next( err );
 
-    res.redirect( '/' );
+          res.send(JSON.stringify(todo));
   });
 };
 
@@ -57,7 +57,7 @@ exports.destroy = function ( req, res, next ){
     todo.remove( function ( err, todo ){
       if( err ) return next( err );
 
-      res.redirect( '/' );
+        res.send(JSON.stringify('ok'));
     });
   });
 };
@@ -81,7 +81,8 @@ exports.edit = function( req, res, next ){
 };
 
 exports.update = function( req, res, next ){
-  Todo.findById( req.params.id, function ( err, todo ){
+    var edittodo=req.body;
+  Todo.findById( edittodo._id, function ( err, todo ){
     var user_id = req.cookies ?
       req.cookies.user_id : undefined;
 
@@ -89,7 +90,7 @@ exports.update = function( req, res, next ){
       return utils.forbidden( res );
     }
 
-    todo.content    = req.body.content;
+    todo.content    = edittodo.content;
     todo.updated_at = Date.now();
     todo.save( function ( err, todo, count ){
       if( err ) return next( err );

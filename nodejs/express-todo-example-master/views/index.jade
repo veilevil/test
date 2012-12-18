@@ -8,20 +8,20 @@ block content
                 button.close(type="button",data-dismiss="modal",aria-hidden="true") ×
                 h3#myModalLabel Modal header
             .modal-body
-                input.update-input(type="text",name="content",value='\{\{todo.content\}\}')
+                input.update-input(type="text",name="content", ng-model="currenttodo.content",required)
+                span.error(ng-show="myModal.content.$error.required") Required!
+                br
             .modal-footer
-                button.btn(data-dismiss="modal",aria-hidden="true") Close
-                button.btn.btn-primary Save changes
-
+                button.btn.btn-primary(ng-click='update(currenttodo);',data-dismiss="modal",aria-hidden="true") Save changes
         .span12
             h1#page-title= title
             #list
-                form(action="/create",method="post",accept-charset="utf-8")
-                    .item-new
-                        input.input(type="text",name="content")
+                .item-new
+                    input.input(type="text",name="content",ng-model="additem.content")
+                    a(href="#nogo",ng-click='create(additem);',title="add this todo item")
+                        i.icon-ok
                 ul
                     li.item(ng-repeat="todo in todos")
-                        a(href="#myModal",onclick='alert({{todo}})',role="button",data-toggle="modal",title="Update this todo item"){{todo.content}}
-                        a(href="/destroy/{{todo._id}}" ,title="Delete this todo item")
-                            i.icon-remove.icon-white
-                            |Delete
+                        a(href="#myModal",ng-click='setedit(todo);',role="button",data-toggle="modal",title="Update this todo item"){{todo.content}}
+                        a(href="#nogo",,ng-click='destroy(todo._id);' ,title="Delete this todo item")
+                            i.icon-remove

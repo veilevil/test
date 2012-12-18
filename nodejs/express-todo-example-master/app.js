@@ -28,8 +28,8 @@ app.configure( 'development', function (){
 });
 
 app.configure( 'production', function (){
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
   app.use( express.cookieParser());
   app.use( express.bodyParser());
   app.use( routes.current_user );
@@ -40,10 +40,12 @@ app.configure( 'production', function (){
 // Routes
 app.get( '/', routes.index );
 app.get( '/todos', routes.getall );
-app.post( '/create', routes.create );
-app.get( '/destroy/:id', routes.destroy );
+app.put( '/create', routes.create );
+app.post( '/edit', routes.edit );
+app.delete( '/destroy/:id', routes.destroy );
 app.get( '/edit/:id', routes.edit );
-app.post( '/update/:id', routes.update );
+//app.post( '/update/:id', routes.update );
+app.post( '/update', routes.update );
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
